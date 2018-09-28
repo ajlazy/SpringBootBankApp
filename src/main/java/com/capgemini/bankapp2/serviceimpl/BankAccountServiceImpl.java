@@ -3,6 +3,8 @@ package com.capgemini.bankapp2.serviceimpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capgemini.bankapp2.Exception.InsufficientBalanceException;
+import com.capgemini.bankapp2.Exception.InvalidAccountException;
 import com.capgemini.bankapp2.repository.BankAccountRepository;
 
 @Service
@@ -17,14 +19,14 @@ public class BankAccountServiceImpl implements com.capgemini.bankapp2.service.Ba
 	}
 
 	@Override
-	public double withdraw(long accountId, double amount) {
+	public double withdraw(long accountId, double amount) throws InsufficientBalanceException {
 
 		double newBalance = getBalance(accountId) - amount;
 		if (newBalance >= 0) {
 			bankAccountRepository.updateBalance(accountId, newBalance);
 			return newBalance;
 		}
-		return -1;
+		throw new InsufficientBalanceException("You dont have sufficient balance");
 	}
 
 	@Override
@@ -36,7 +38,7 @@ public class BankAccountServiceImpl implements com.capgemini.bankapp2.service.Ba
 	}
 
 	@Override
-	public boolean fundTransfer(long fromAcc, long toAcc, double amount) {
+	public boolean fundTransfer(long fromAcc, long toAcc, double amount) throws InvalidAccountException, InsufficientBalanceException{
 		
 					double balance=withdraw(fromAcc, amount);
 					if(balance!=-1)
@@ -44,10 +46,8 @@ public class BankAccountServiceImpl implements com.capgemini.bankapp2.service.Ba
 						if(deposit(toAcc, amount)==-1)
 						{
 							deposit(fromAcc, amount);
-							return false;
+							throw new InvalidAccountException("Account doesnt exist");
 						}
-						return true;
-						
 					}
 					return false;
 				

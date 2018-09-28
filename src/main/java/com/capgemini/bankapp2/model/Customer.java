@@ -2,6 +2,8 @@ package com.capgemini.bankapp2.model;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Customer {
 
 
@@ -11,6 +13,7 @@ public class Customer {
 	private String customerPassword;
 	private String customerEmail;
 	private String customerAddress;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate customerDateOfBirth;
 	private BankAccount customerAccount ;
 	public Customer() {

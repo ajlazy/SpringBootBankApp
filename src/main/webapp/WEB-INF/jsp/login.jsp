@@ -7,20 +7,20 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<%@ include file="header.jsp" %>
+<%@ include file="home.jsp" %>
 </head>
 <body style="text-align:left">
 <br>
 	<h1>Login</h1>
-	<form action="login.do" method="post"  modelAttribute="customer">
+	<form:form action="login.do" method="post" modelAttribute="customer">
 		<br><br>
-		<label>Email Id: </label>
-		<input type="text" name="customerEmail" placeholder="enter your emailId" required/>
-		<br> <br>
-		<label>Password: </label>
-		<input type="password" name="customerPassword" placeholder="enter your password"required/>
+		<form:label path="customerEmail" >Email Id: </form:label>
+		<form:input path="customerEmail"/>
+		<br> <br> 
+		<form:label  path="customerPassword">Password: </form:label>
+		<form:input type="password" path="customerPassword" />
 		<br> <br>
 		<input type="submit" value="Login"/>
-	</form>
+	</form:form>
 </body>
 </html>

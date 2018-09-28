@@ -34,43 +34,9 @@ public class BankAccountRepositoryImpl implements BankAccountRepository {
 
 
 
-	@Override
-	public BankAccount findBankAccountById(long accountId) {
-		return jdbcTemplate.queryForObject("SELECT * FROM bankAccounts WHERE accountId = ?", new Object[] { accountId },
-				new BankAccountRowMapper());
-	}
+	
+	
+	
 
-	@Override
-	public List<BankAccount> finrAllBankAccounts() {
-		return	jdbcTemplate.query("SELECT * FROM bankAccounts",new Object[] {},new BankAccountRowMapper());
-	}
-
-	@Override
-	public BankAccount updateBankAccount(BankAccount account) {
-		int count = jdbcTemplate.update(
-				"UPDATE bankAccounts SET accountHolderName = ?, accountType = ? WHERE accountId = ?",
-				new Object[] {account.getAccountHolderName(),account.getAccountType(),account.getAccountId()});
-		return count != 0 ? account : findBankAccountById(account.getAccountId());
-	}
-
-	@Override
-	public boolean deleteBankAccount(long accountId) {
-		int count = jdbcTemplate.update("DELETE FROM bankAccounts WHERE accountId = ?", new Object[] { accountId });
-		return count != 0;
-	}
-
-	private class BankAccountRowMapper implements RowMapper<BankAccount> {
-
-		@Override
-		public BankAccount mapRow(ResultSet rs, int rowNum) throws SQLException {
-			BankAccount account = new BankAccount();
-			account.setAccountId(rs.getLong(1));
-			account.setAccountHolderName(rs.getString(2));
-			account.setAccountType(rs.getString(3));
-			account.setAccountBalance(rs.getDouble(4));
-			return account;
-		}
-
-	}
-
+	
 }

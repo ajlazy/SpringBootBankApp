@@ -71,8 +71,8 @@ img {
 </section>
 
   <div class="topright"> 
-  <h2>  <c:out value="Welcome ${customer.customerId}" /></h2>
-   <H2 align="right"> <a href="logout.jsp">   logout   </a></H2>
+  <h2>  <c:out value="Welcome ${sessionScope.customer.customerId}" /></h2>
+   <H2 align="right"> <a href="logout">   logout   </a></H2>
 </div>  
 </c:if>
 
@@ -86,7 +86,7 @@ img {
 </section>
 
   <div class="topright"> 
-   <H2 align="right"> <a href="login.jsp"> login </a></H2>
+   <H2 align="right"> <a href="login"> login </a></H2>
 </div>  
 </c:if>
 </header>

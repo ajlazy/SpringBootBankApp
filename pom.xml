@@ -35,16 +35,10 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-<!-- <dependency> -->
-<!--     <groupId>mysql</groupId> -->
-<!--     <artifactId>mysql-connector-java</artifactId> -->
-<!--     <version>5.1.46</version>$NO-MVN-MAN-VER$ -->
-<!-- </dependency> -->
-<!-- <dependency> -->
-<!--     <groupId>mysql</groupId> -->
-<!--     <artifactId>mysql-connector-java</artifactId> -->
-<!--     <version>5.1.46</version> -->
-<!-- </dependency> -->
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    </dependency>
 		<dependency>
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>mssql-jdbc</artifactId>
@@ -59,6 +53,19 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
 		</dependency>
 	</dependencies>
 

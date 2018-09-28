@@ -30,6 +30,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 				"update customers set customerName= ? ,customerPassword= ? ,customerEmail= ? ,customerAddress= ? , customerDateOfBirth= ? where customerId= ? ",
 				new Object[] { customer.getCustomerName(), customer.getCustomerPassword(), customer.getCustomerEmail(),
 						customer.getCustomerAddress(), customer.getCustomerDateOfBirth(), customer.getCustomerId() });
+		System.out.println(customer);
 		return count != 0 ? customer : null;
 	}
 
