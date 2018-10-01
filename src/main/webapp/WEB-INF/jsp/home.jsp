@@ -50,7 +50,7 @@ img {
 </head>
 <body>
 <div class="container">
-  <img src="https://www.marketing91.com/wp-content/uploads/2015/05/Marketing-mix-of-ICICI-bank.jpg" align="left"  width="1000" height="300">
+  <img src="https://www.capgemini.com/wp-content/uploads/2017/10/cg_logo.jpg" align="left"  width="1000" height="300">
   <div class="topright"></div>
 </div>
 <br>

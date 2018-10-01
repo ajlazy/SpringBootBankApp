@@ -3,6 +3,9 @@ package com.capgemini.bankapp2.repositoryimpl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -12,27 +15,43 @@ import com.capgemini.bankapp2.model.Customer;
 import com.capgemini.bankapp2.repository.CustomerRepository;
 
 @Repository
-public class CustomerRepositoryImpl implements CustomerRepository {
+public class CustomerRepositoryImpl implements CustomerRepository  {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
 	@Override
-	public Customer authenticate(Customer customer) {
+	public Customer authenticate(Customer customer) throws DataAccessException{
+	try{
 		return jdbcTemplate.queryForObject(
 				"SELECT * FROM customers, bankAccounts where customers.accountId = bankAccounts.accountId and customerEmail = ? AND customerPassword = ?",
 				new Object[] { customer.getCustomerEmail(), customer.getCustomerPassword() }, new CustomerRowMapper());
 	}
+	catch(DataAccessException e){
+		e.initCause(new EmptyResultDataAccessException("no user found , expected 1 actiual 0",1));
+		throw e;
+	}
+	}
 
 	@Override
 	public Customer updateProfile(Customer customer) {
+	try{
+		
 		int count = jdbcTemplate.update(
 				"update customers set customerName= ? ,customerPassword= ? ,customerEmail= ? ,customerAddress= ? , customerDateOfBirth= ? where customerId= ? ",
 				new Object[] { customer.getCustomerName(), customer.getCustomerPassword(), customer.getCustomerEmail(),
 						customer.getCustomerAddress(), customer.getCustomerDateOfBirth(), customer.getCustomerId() });
 		System.out.println(customer);
 		return count != 0 ? customer : null;
+	   
+		}
+	catch(IncorrectResultSizeDataAccessException e)
+	{
+		e.initCause(new EmptyResultDataAccessException(1));
+		throw e;
 	}
+	}
+	
 
 	@Override
 	public boolean updatePassword(Customer customer, String oldPassword, String newPassword) {

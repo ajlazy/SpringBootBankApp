@@ -1,19 +1,38 @@
 package com.capgemini.bankapp2.model;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class Customer {
 
-
+	public interface loginCheck { 
+	};
 
 	private long customerId;
+	
+	@NotBlank(message = "Name cannot be blank")
 	private String customerName;
+	
+	@Size(min = 1, max = 7, message 
+		    = "Password must be between 3 and 7 characters",groups= loginCheck.class)
 	private String customerPassword;
+	
+	@NotBlank(message = "Email cannot be blank")
+	@NotNull
+	@Email(message = "Email should be valid")
 	private String customerEmail;
 	private String customerAddress;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
+	
+	@NotNull (message = "DateOfBirth cannot be blank")
+	@PastOrPresent(message = "D.O.B is invalid")
 	private LocalDate customerDateOfBirth;
 	private BankAccount customerAccount ;
 	public Customer() {

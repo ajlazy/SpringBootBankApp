@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +22,7 @@ import com.capgemini.bankapp2.Exception.InvalidAccountException;
 import com.capgemini.bankapp2.Exception.InvalidDetailsException;
 import com.capgemini.bankapp2.model.BankAccount;
 import com.capgemini.bankapp2.model.Customer;
+import com.capgemini.bankapp2.model.Customer.loginCheck;
 import com.capgemini.bankapp2.service.BankAccountService;
 import com.capgemini.bankapp2.service.CustomerService;
 
@@ -50,8 +53,13 @@ public class BankAppController {
 	}
 
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public String login(Model model, @ModelAttribute Customer customer, HttpServletRequest request) {
+	public String login(Model model,@Validated({ loginCheck.class }) @ModelAttribute Customer customer,BindingResult bindingResult, HttpServletRequest request) {
 
+		
+	//if (bindingResult.hasErrors()) {
+	 //       return "login";
+	//	}
+	System.out.println("dgvdrgdgb");
 		Cookie cookies[] = request.getCookies();
 		if (cookies == null)
 			return "enableCookies";

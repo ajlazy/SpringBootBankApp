@@ -16,7 +16,7 @@
 <br><br>
 <form:form action="editProfile.do" method="post" modelAttribute="customer">
 <form:label path="customerId">customer Id</form:label>
-<form:input readonly="readonly" path="customerId"/>
+<form:input  path="customerId" readonly="true"/>
 <br>
 <form:label path="customerName">Enter Name</form:label>
 <form:input required="required" path="customerName"/>
