@@ -1,13 +1,10 @@
 package com.capgemini.bankapp2.controller;
 
-import java.time.LocalDateTime;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
+
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,28 +13,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.capgemini.bankapp2.Exception.IncorrectPasswordException;
-import com.capgemini.bankapp2.Exception.InsufficientBalanceException;
-import com.capgemini.bankapp2.Exception.InvalidAccountException;
 import com.capgemini.bankapp2.Exception.InvalidDetailsException;
-import com.capgemini.bankapp2.model.BankAccount;
 import com.capgemini.bankapp2.model.Customer;
 import com.capgemini.bankapp2.model.Customer.loginCheck;
-import com.capgemini.bankapp2.service.BankAccountService;
 import com.capgemini.bankapp2.service.CustomerService;
-@SessionAttributes("customer")
-@EnableAutoConfiguration
-@Controller
-public class BankAppController {
 
+
+public class CustomerController {
 	@Autowired
 	CustomerService customerService;
-	@Autowired
-	BankAccountService bankAccountService;
-
+	
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getHomePage() {
 		return "home";
@@ -108,30 +99,8 @@ public class BankAppController {
 		return "logout";
 
 	}
-
-	@RequestMapping(value = "/transferAmount", method = RequestMethod.GET)
-	public String getTransferAmountPage(Model model, HttpServletRequest request, HttpSession session) {
-			request.getSession();
-            Customer customer=(Customer) session.getAttribute("customer");
-       BankAccount bankAccount=customer.getCustomerAccount();
-		model.addAttribute("bankAccount",bankAccount);
-		return "transferAmount";
-
-	}
-
-	@RequestMapping(value = "/transferAmount.do", method = RequestMethod.POST)
-	public String transferAmount(Model model, @RequestParam long fromAccount, @RequestParam long toAccount,
-			@RequestParam double amount) {
-
-		try {
-			bankAccountService.fundTransfer(fromAccount, toAccount, amount);
-		} catch (InsufficientBalanceException | InvalidAccountException e) {
-			model.addAttribute("exception", e.getMessage());
-			return "exceptionPage";
-		}
-		return "successfulTransfer";
-	}
-
+	
+	
 	@RequestMapping(value = "/changePassword", method = RequestMethod.GET)
 	public String getChangePasswordPage() {
 		return "changePassword";
@@ -154,11 +123,5 @@ public class BankAppController {
 		return "successfulPasswordChange";
 
 	}
-
-	@RequestMapping(value = "/checkBalance", method = RequestMethod.GET)
-	public String getBalance(HttpServletRequest request) {
-		return "getBalance";
-
-	}
-
+	
 }
